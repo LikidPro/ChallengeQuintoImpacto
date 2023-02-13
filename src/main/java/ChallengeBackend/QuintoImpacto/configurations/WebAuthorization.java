@@ -21,18 +21,13 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter  {
         http.authorizeRequests()
 
                 .antMatchers("/rest/**").hasAuthority("ADMIN")
-//                .antMatchers("/admin/admin.html").hasAuthority("ADMIN")
-//                .antMatchers("/admin/admin.js").hasAuthority("ADMIN")
-//                .antMatchers("/admin/admin.css").hasAuthority("ADMIN")
-//                .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
-                .antMatchers("/h2-console").hasAuthority("ADMIN")
+                .antMatchers("/admin/admin.html").hasAuthority("ADMIN")
+                .antMatchers("/admin/admin.js").hasAuthority("ADMIN")
+                .antMatchers("/admin/admin.css").hasAuthority("ADMIN")
+                .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
                 .antMatchers("login/**").permitAll()
-                .antMatchers(HttpMethod.POST , "api/clients").permitAll()
-                .antMatchers(HttpMethod.POST , "api/accounts").permitAll()
-                .antMatchers(HttpMethod.POST , "/api/client/send/email").permitAll()
-                .antMatchers(HttpMethod.PATCH, "api/clients/current").permitAll()
-                .antMatchers(HttpMethod.PATCH, "api/clients/current").hasAuthority("USER")
-                .antMatchers(HttpMethod.DELETE,"api/clients/current/cards").hasAuthority("USER")
+                .antMatchers(HttpMethod.PATCH, "api/*").hasAuthority("ADMIN")
+
         ;
 
        http.formLogin()
@@ -50,9 +45,9 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter  {
 
         http.exceptionHandling().authenticationEntryPoint((req, res, exc) -> {
 
-//            if (req.getRequestURI().contains("admin")) {
-//                res.sendRedirect("/login.html");
-//            }
+            if (req.getRequestURI().contains("admin")) {
+                res.sendRedirect("/login.html");
+            }
         });
 
         http.formLogin().successHandler((req, res, auth) -> {clearAuthenticationAttributes(req);});
