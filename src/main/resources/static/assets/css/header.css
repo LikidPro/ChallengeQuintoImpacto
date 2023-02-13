@@ -1,0 +1,14 @@
+header{
+    height: 35vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("http://quintoimpacto.net/wp-content/uploads/2016/08/fondou.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+}
+.titulo{
+    margin-top: 1rem;
+}
