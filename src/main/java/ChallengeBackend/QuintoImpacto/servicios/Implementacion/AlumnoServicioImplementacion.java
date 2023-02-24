@@ -17,12 +17,17 @@ public class AlumnoServicioImplementacion implements AlumnoServicio {
     private AlumnoRepositorio alumnoRepositorio;
     @Override
     public Set<AlumnoDTO> getAlumnosDTO() {
-        return alumnoRepositorio.findAll().stream().map(alumno -> new AlumnoDTO(alumno)).collect(Collectors.toSet());
+        return alumnoRepositorio.findAll().stream().filter(alumno -> alumno.isEstadoAlumno()).map(alumno -> new AlumnoDTO(alumno)).collect(Collectors.toSet());
     }
 
     @Override
     public Alumno getAlumnoByEmail(String email) {
         return alumnoRepositorio.findByEmail(email);
+    }
+
+    @Override
+    public Alumno getAlumnoById(Long id) {
+        return alumnoRepositorio.findById(id).orElse(null);
     }
 
     @Override

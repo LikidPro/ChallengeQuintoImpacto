@@ -142,6 +142,17 @@ public class AlumnoControlador {
         return new ResponseEntity<>("Curso Borrado",HttpStatus.OK);
     }
 
+    @PatchMapping("/alumno/borrar")
+    public ResponseEntity<?> borrarAlumno(@RequestParam Long id) {
+        Alumno alumno = alumnoServicio.getAlumnoById(id);
 
+        if ( alumno == null ) {
+            return new ResponseEntity<>("El alumno no existe",HttpStatus.FORBIDDEN);
+        }
+
+        alumno.setEstadoAlumno(false);
+        alumnoServicio.saveAlumno(alumno);
+        return new ResponseEntity<>("Alumno borrado",HttpStatus.OK);
+    }
 
 }

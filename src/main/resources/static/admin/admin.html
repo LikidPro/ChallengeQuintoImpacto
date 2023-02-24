@@ -103,7 +103,7 @@
                 <p>Email</p>
                 <p>Cursos inscriptos</p>
                 <p></p>
-                <!-- <p></p> -->
+                <p></p>
             </div>
             <div v-for="alumno in alumnos" class="tabla">
                 <p>{{alumno.nombre}} </p>
@@ -119,7 +119,7 @@
                 </button>
                 </p>
                 <button @click="editarAlumno(alumno.id)" data-bs-toggle="modal"data-bs-target="#modal-alumno"  class="btn btn-success p-1">Editar</button>
-                <!-- <button @click="eliminarAlumno(alumno.id)"  class="btn btn-danger p-1">Eliminar</button> -->
+                <button @click="eliminarAlumno(alumno.id)"  class="btn btn-danger p-1">Eliminar</button>
                 <!-- Modal alumno -->
                 <div class="modal fade" id="modal-alumno" tabindex="-1" aria-labelledby="exampleModalLabel"aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">

@@ -22,12 +22,14 @@ public class Webauthentication extends GlobalAuthenticationConfigurerAdapter{
     public void init(AuthenticationManagerBuilder auth) throws Exception{
         auth.userDetailsService(inputName-> {
             Alumno alumno = alumnoRepositorio.findByEmail(inputName);
-            if (alumno != null && alumno.isEstadoAlumno()==true){
+            if (alumno != null && alumno.isEstadoAlumno()){
                 if (alumno.getEmail().contains("admin@admin.com")){
                     return new User(alumno.getEmail() , alumno.getContraseña(),
                             AuthorityUtils.createAuthorityList("ADMIN"));
-                  }
-                else {
+                  } else if (alumno.getEmail().contains("@profesor.com")) {
+                    return new User(alumno.getEmail() , alumno.getContraseña(),
+                            AuthorityUtils.createAuthorityList("PROFESOR"));
+                } else {
                 return new User(alumno.getEmail() , alumno.getContraseña(),
                 AuthorityUtils.createAuthorityList("ALUMNO"));
 

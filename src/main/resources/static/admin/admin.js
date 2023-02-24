@@ -285,7 +285,17 @@ createApp({
 
    },
    eliminarAlumno(id){
-    axios.delete('/api/alumno/id')
+    axios.patch('/api/alumno/borrar', 'id='+id).then(() => {
+      Swal.fire({
+        background:'#dc1d1d',
+        position: 'top-end',
+        title: 'Alumno borrado con exito',
+        showConfirmButton: false,
+        timer: 1500
+      }).then(response => {
+        this.obtenerAlumnos(this.alumnosUrl)
+       }).catch(error => this.error = error.response.status)
+    })
    },
    crearCurso(){
 

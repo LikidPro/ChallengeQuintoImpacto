@@ -12,5 +12,8 @@ public interface AlumnoServicio {
 
     public Alumno getAlumnoByEmail(String email);
 
+    public Alumno getAlumnoById(Long id);
+
     public void saveAlumno(Alumno alumno);
+
 }
