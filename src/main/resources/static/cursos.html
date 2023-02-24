@@ -87,7 +87,8 @@
             <h5>{{curso.area}}</h5>
             <h5>{{curso.horario}}</h5>
             <h5>{{curso.profesor}}</h5>
-            <button @click="agregarAlumno(curso)" class="btn-primary">Inscribirse</button>
+            <button v-if="!alumnoCursos.includes(curso.nombre)" @click="agregarAlumno(curso)" class="btn-primary">Inscribirse</button>
+            <h5 class="d-flex flex-column" v-if="alumnoCursos.includes(curso.nombre)">Inscripto desde<p>{{alumnoCursosFechas.find(alumnoCurso => alumnoCurso.curso == curso.nombre).fecha}} </p></h5>
 
         </div>
        

@@ -3,6 +3,7 @@ package ChallengeBackend.QuintoImpacto.modelos;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 public class CursoAlumno {
@@ -19,14 +20,17 @@ public class CursoAlumno {
     @JoinColumn(name = "curso_id")
     private Curso curso;
 
+    private LocalDate localDate;
+
     public CursoAlumno() {
     }
 
-    public CursoAlumno(Alumno alumno, Curso curso) {
+    public CursoAlumno(Alumno alumno, Curso curso,LocalDate localDate) {
         this.alumno = alumno;
         this.curso = curso;
-    }
+        this.localDate=localDate;
 
+    }
     public long getId() {
         return id;
     }
@@ -49,6 +53,14 @@ public class CursoAlumno {
 
     public void setCurso(Curso curso) {
         this.curso = curso;
+    }
+
+    public LocalDate getLocalDate() {
+        return localDate;
+    }
+
+    public void setLocalDate(LocalDate localDate) {
+        this.localDate = localDate;
     }
 
     @Override

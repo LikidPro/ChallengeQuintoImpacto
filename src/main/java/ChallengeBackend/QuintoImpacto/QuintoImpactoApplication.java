@@ -12,6 +12,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDate;
+
 @SpringBootApplication
 public class QuintoImpactoApplication {
 
@@ -72,6 +74,7 @@ public class QuintoImpactoApplication {
 //			cursoAlumnoRepositorio.save(cursoAlumno3);
 //			cursoAlumnoRepositorio.save(cursoAlumno4);
 //			cursoAlumnoRepositorio.save(cursoAlumno5);
+
 		};
 }
 	}

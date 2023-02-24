@@ -1,5 +1,4 @@
 package ChallengeBackend.QuintoImpacto;
-
 import ChallengeBackend.QuintoImpacto.modelos.Alumno;
 import ChallengeBackend.QuintoImpacto.modelos.Curso;
 import ChallengeBackend.QuintoImpacto.modelos.CursoAlumno;
@@ -9,13 +8,11 @@ import ChallengeBackend.QuintoImpacto.repositorios.CursoAlumnoRepositorio;
 import ChallengeBackend.QuintoImpacto.repositorios.CursoRepositorio;
 import ChallengeBackend.QuintoImpacto.repositorios.ProfesorRepositorio;
 import org.junit.jupiter.api.Test;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-
 import java.util.List;
 
 

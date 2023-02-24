@@ -39,11 +39,11 @@
             <div class="offcanvas-body">
                 <ul class="contenido-nav navbar-nav justify-content-center ms-5  gap-5 ">
                     <li class="nav-item">
-                        <a class="nav-link active d-flex align-items-center" aria-current="page" href="#">
+                        <a class="nav-link active d-flex align-items-center" aria-current="page" href="../index.html">
                             </span>INICIO</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center" href="./cursos.html">CURSOS</a>
+                        <a class="nav-link d-flex align-items-center" href="../cursos.html">CURSOS</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link d-flex align-items-center" href="http://quintoimpacto.net/">¿QUIENES SOMOS?</a>
@@ -103,33 +103,33 @@
                 <p>Email</p>
                 <p>Cursos inscriptos</p>
                 <p></p>
-                <p></p>
+                <!-- <p></p> -->
             </div>
             <div v-for="alumno in alumnos" class="tabla">
                 <p>{{alumno.nombre}} </p>
                 <p>{{alumno.apellido}}</p>
                 <p>{{alumno.email}}</p>
                 <p>
-                    <button data-bs-toggle="collapse" :href="'#collapseExample' + alumno.id" role="button" aria-expanded="false" :aria-controls="'collapseExample' + alumno.id">{{alumno.cursos.length}} 
+                    <button class="w-100" data-bs-toggle="collapse" :href="'#collapseExample' + alumno.id" role="button" aria-expanded="false" :aria-controls="'collapseExample' + alumno.id">{{alumno.cursos.length}} 
                         <div class="collapse" :id="'collapseExample' + alumno.id">
                              <div class="card card-body w-100">
-                                   <p class="w-100" v-for="c in alumno.cursos">{{c}}</p>
+                                   <p class="w-100" v-for="c in alumno.cursos">{{c.curso + ' inscripto desde ' + c.fecha}}</p>
                              </div>
                          </div>
                 </button>
                 </p>
                 <button @click="editarAlumno(alumno.id)" data-bs-toggle="modal"data-bs-target="#modal-alumno"  class="btn btn-success p-1">Editar</button>
-                <button @click="eliminarAlumno(alumno.id)"  class="btn btn-danger p-1">Eliminar</button>
+                <!-- <button @click="eliminarAlumno(alumno.id)"  class="btn btn-danger p-1">Eliminar</button> -->
                 <!-- Modal alumno -->
                 <div class="modal fade" id="modal-alumno" tabindex="-1" aria-labelledby="exampleModalLabel"aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header d-flex justify-content-center">
-                                <h1 class="modal-title fs-5 " id="exampleModalLabel">Profesor</h1>
+                                <h1 class="modal-title fs-5 " id="exampleModalLabel">Alumno</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>                         
-                                <div  class="modal-body">
+                                <div  class="modal-body d-flex flex-column align-items-center gap-2">
                                     <label >
                                         Nombre
                                         <input  v-model="alumnoNombre" type="text" :placeholder="alumnoSeleccionado.nombre">
@@ -143,11 +143,11 @@
                                         <input  v-model="alumnoEmail" type="text" :placeholder="alumnoSeleccionado.email">
                                     </label>
                                     <legend>Cursos activos</legend>
-                                         <div class="d-flex mb-2" v-for="c in alumnoSeleccionado.cursos">
-                                             <p >
-                                                 {{c}}                                         
+                                         <div class="d-flex mb-2 w-100" v-for="c in alumnoSeleccionado.cursos">
+                                             <p class="w-50">
+                                                 {{c.curso + ' inscripto desde ' + c.fecha}}                                         
                                              </p>
-                                             <button @click="quitaCursoAlumno(c)" class="btn btn-danger p-1">Quitar Curso</button>                               
+                                             <button @click="quitaCursoAlumno(c.curso)" class="btn btn-danger p-1 ms-5">Quitar Curso</button>                               
                                          </div>       
                                          <button @click="cambiarAlumno()" class="btn btn-success p-1" data-bs-dismiss="modal"
                                          aria-label="Close"  v-model="alumno">Aceptar</button>                                 
@@ -168,7 +168,7 @@
                 <p>Horario</p>
                 <p>Profesor</p>
                 <p></p>
-                <p></p>
+                <!-- <p></p> -->
             </div>
             <div v-for="curso in cursos" class="tabla">
                 <p>{{curso.nombre}} </p>
@@ -176,19 +176,73 @@
                 <p>{{curso.horario}}</p>
                 <p>{{curso.profesor}}</p>
                 <button @click="editarCurso(curso.id)"  data-bs-toggle="modal"data-bs-target="#modal-curso" class="btn btn-success p-1">Editar</button>
-                <button  @click="eliminarCurso(curso.id)" class="btn btn-danger p-1">Eliminar</button>
+                <!-- <button  @click="eliminarCurso(curso.id)" class="btn btn-danger p-1">Eliminar</button> -->
+            </div>
+            <div class="w-100 mt-5 d-flex justify-content-center">
+
+                <button   data-bs-toggle="modal"data-bs-target="#modal-curso-crear" class="btn btn-success p-1">Crear curso</button>
+                
+            </div>
+             <!-- Modal curso crear -->
+             <div class="modal fade" id="modal-curso-crear" tabindex="-1" aria-labelledby="exampleModalLabel"aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header d-flex justify-content-center">
+                            <h1 class="modal-title fs-5 " id="exampleModalLabel">Nuevo curso</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                       
+                            <div  class="modal-body d-flex flex-column align-items-center gap-2">
+                                <label >
+                                    Nombre
+                                    <input v-model="cursoNombre" type="text" placeholder="Ingrese nombre">
+                                </label>
+                                <label >
+                                    Area
+                                    <input v-model="cursoArea" type="text" placeholder="ingrese area">
+                                </label>
+                                <label >
+                                    Horario
+                                    <select v-model="cursoHorario">
+                                        <option selected >Seleccione un horario</option>
+                                        <option >Mañana</option>
+                                        <option >Tarde</option>
+                                        <option >Noche</option>
+                                    </select>
+                                </label>
+                                <label >                                 
+                                    <select v-model="cursoProfesor" >
+                                        <option selected>Seleccione un profesor</option>
+                                        <option v-for="profesor in profesores" :value="profesor.id">{{profesor.nombre + ' ' + profesor.apellido}} </option>
+                                    </select>
+                                   
+                                </label>  
+                                <div class="w-100 d-flex justify-content-center gap-3">
+                                    <button  @click="crearCurso()" class="btn btn-success p-1" data-bs-dismiss="modal"
+                                    aria-label="Close">Aceptar</button>        
+                                    <button   class="btn btn-danger p-1" data-bs-dismiss="modal"
+                                    aria-label="Close">Cancelar</button>   
+                                </div>
+                                                                          
+                             </div>
+                  
+                     
+                       
+                    </div>
+                </div>
             </div>
                    <!-- Modal curso -->
                    <div class="modal fade" id="modal-curso" tabindex="-1" aria-labelledby="exampleModalLabel"aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header d-flex justify-content-center">
-                                <h1 class="modal-title fs-5 " id="exampleModalLabel">Profesor</h1>
+                                <h1 class="modal-title fs-5 " id="exampleModalLabel">Curso</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                            
-                                <div  class="modal-body">
+                                <div  class="modal-body d-flex flex-column align-items-center gap-2">
                                     <label >
                                         Nombre
                                         <input type="text" :placeholder="cursoSeleccionado.nombre">
@@ -202,9 +256,15 @@
                                         <input type="text" :placeholder="cursoSeleccionado.horario">
                                     </label>
                                     <label >
-                                        Profesor:{{cursoSeleccionado.profesor}}
-                                        <button @click="borrarProfesor(cursoSeleccionado.nombre)" class="btn btn-danger p-1">Quitar Profesor</button>
-                                    </label>                                   
+                                        Profesor: {{cursoSeleccionado.profesor}}
+                                        <button v-if="cursoSeleccionado.profesor != 'No asignado'" @click="borrarProfesor(cursoSeleccionado.nombre)" class="btn btn-danger p-1">Quitar Profesor</button>                                   
+                                            <select v-if="cursoSeleccionado.profesor == 'No asignado'" v-model="cursoProfesor" >
+                                                <option selected>Seleccione un profesor</option>
+                                                <option v-for="profesor in profesores" :value="profesor.id">{{profesor.nombre + ' ' + profesor.apellido}} </option>
+                                            </select>                                     
+                                    </label>  
+                                    <button  @click="cambiarCurso()" class="btn btn-success p-1" data-bs-dismiss="modal"
+                                    aria-label="Close" >Aceptar</button>                                                
                                  </div>
                       
                          
@@ -219,19 +279,19 @@
                 <p>Apellido</p>
                 <p>Cantidad de cursos</p>
                 <p></p>
-                <p></p>
+                <!-- <p></p> -->
               
             </div>
             <div v-for="profesor in profesores" class="tabla">
                 <p>{{profesor.nombre}} </p>
                 <p>{{profesor.apellido}}</p>
-                <p><button data-bs-toggle="collapse" :href="'#collapseExample2' + profesor.id " role="button" aria-expanded="false" :aria-controls="'collapseExample2' + profesor.id ">{{profesor.cursos.length}} <div class="collapse" :id="'collapseExample2'+ profesor.id">
+                <p><button class="w-100"  data-bs-toggle="collapse" :href="'#collapseExample2' + profesor.id " role="button" aria-expanded="false" :aria-controls="'collapseExample2' + profesor.id ">{{profesor.cursos.length}} <div class="collapse" :id="'collapseExample2'+ profesor.id">
                     <div class="card card-body w-100 ">
                       <p class="w-100" v-for="c in profesor.cursos">{{c.nombre}}</p>
                     </div>
                   </div></button></p>
                   <button @click="editarProfesor(profesor.id)"  data-bs-toggle="modal"data-bs-target="#modal-profesor"  class="btn btn-success p-1">Editar</button>
-                  <button  @click="eliminarProfesor(profesor.id)" class="btn btn-danger p-1">Eliminar</button>
+                  <!-- <button  @click="eliminarProfesor(profesor.id)" class="btn btn-danger p-1">Eliminar</button> -->
                 <!-- Modal profesor -->
                 <div class="modal fade" id="modal-profesor" tabindex="-1" aria-labelledby="exampleModalLabel"aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
@@ -242,35 +302,68 @@
                                     aria-label="Close"></button>
                             </div>
                            
-                                <div  class="modal-body">
+                                <div  class="modal-body d-flex flex-column align-items-center gap-2">
                                     <label >
                                         Nombre
-                                        <input type="text" :placeholder="profesorSeleccionado.nombre">
+                                        <input v-model="profesorNombre" type="text" :placeholder="profesorSeleccionado.nombre">
                                     </label>
                                     <label >
                                         Apellido
-                                        <input type="text" :placeholder="profesorSeleccionado.apellido">
+                                        <input v-model="profesorApellido" type="text" :placeholder="profesorSeleccionado.apellido">
                                     </label>
                                     <legend>Cursos activos</legend>
-                                         <div class="d-flex mb-2" v-for="curso in profesorSeleccionado.cursos">
+                                         <div class="d-flex mb-2 w-100" v-for="curso in profesorSeleccionado.cursos">
 
-                                             <p >
+                                             <p class="w-50">
                                                  {{curso.nombre}}                                         
                                              </p>
-                                             <button class="btn btn-danger p-1">Quitar Curso</button>
+                                             <button @click="quitarCursoProfesor()" class="btn btn-danger p-1 ms-5">Quitar Curso</button>
                                 
                                          </div>
                                   
-                                   
+                                        
+                                        <button  @click="cambiarProfesor()" class="btn btn-success p-1" data-bs-dismiss="modal"
+                                        aria-label="Close" >Aceptar</button>          
                                  </div>
-                      
-                         
+                                                
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal profesor nuevo -->
+                <div class="modal fade" id="modal-profesor-nuevo" tabindex="-1" aria-labelledby="exampleModalLabel"aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header d-flex justify-content-center">
+                                <h1 class="modal-title fs-5 " id="exampleModalLabel">Profesor</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
                            
+                                <div  class="modal-body d-flex flex-column align-items-center gap-2">
+                                    <label >
+                                        Nombre
+                                        <input  v-model="profesorNombre" type="text" placeholder="Nombre del profesor">
+                                    </label>
+                                    <label >
+                                        Apellido
+                                        <input v-model="profesorApellido"  type="text" placeholder="Apellido del profesor">
+                                    </label>
+
+                                    <button  @click="crearProfesor()" class="btn btn-success p-1" data-bs-dismiss="modal"
+                                    aria-label="Close">Aceptar</button>                  
+                                                                      
+                                 </div>   
                         </div>
                     </div>
                 </div>
               
             </div>
+            <div class="w-100 mt-5 d-flex justify-content-center">
+
+                <button   data-bs-toggle="modal"data-bs-target="#modal-profesor-nuevo" class="btn btn-success p-1">Crear Profesor</button>
+                
+            </div>
+            
         </div>
        
       </div>

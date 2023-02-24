@@ -20,7 +20,7 @@ public class AlumnoDTO {
 
     private boolean estadoAlumno;
 
-    private Set<String> cursos = new HashSet<>();
+    private Set<CursoAlumnoDTO> cursos = new HashSet<>();
 
     public AlumnoDTO(Alumno alumno) {
         this.id = alumno.getId();
@@ -30,7 +30,7 @@ public class AlumnoDTO {
         this.contraseña = alumno.getContraseña();
         this.codigoActivacion = alumno.getCodigoActivacion();
         this.estadoAlumno = alumno.isEstadoAlumno();
-        this.cursos = alumno.getCursos().stream().map(cursoAlumno -> cursoAlumno.getCurso().getNombre()).collect(Collectors.toSet());
+        this.cursos = alumno.getCursos().stream().map(cursoAlumno -> new CursoAlumnoDTO(cursoAlumno)).collect(Collectors.toSet());
     }
 
     public long getId() {
@@ -89,7 +89,7 @@ public class AlumnoDTO {
         this.estadoAlumno = estadoAlumno;
     }
 
-    public Set<String> getCursos() {return cursos;}
+    public Set<CursoAlumnoDTO> getCursos() {return cursos;}
 
-    public void setCursos(Set<String> cursos) {this.cursos = cursos;}
+    public void setCursos(Set<CursoAlumnoDTO> cursos) {this.cursos = cursos;}
 }

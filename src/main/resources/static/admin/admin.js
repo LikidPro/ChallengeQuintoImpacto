@@ -22,6 +22,7 @@ createApp({
         cursoNombre:'',
         cursoArea:'',
         cursoHorario:'',
+        cursoProfesor:'',
         alumnoBuscado:'',
         checkFiltrado:[],
         cursoBuscado:[],
@@ -176,6 +177,74 @@ createApp({
     this.obtenerAlumnos(this.alumnosUrl)
 
    },
+   cambiarCurso(){
+    
+    if(this.cursoNombre != ''){
+      axios.patch('/api/curso/nombre',  'nombre=' + this.cursoSeleccionado.nombre + '&nombre=' + this.cursoNombre).then(response =>{
+        console.log(response.data);
+         })
+         .catch(error => this.error = error.response.status);
+    }
+    
+    if(this.cursoArea != ''){
+      axios.patch('/api/curso/area', 'nombre=' + this.cursoSeleccionado.nombre + '&area=' + this.cursoArea).then(response =>{
+        console.log(response.data);
+         })
+         .catch(error => this.error = error.response.status);
+    
+    }
+
+    if(this.cursoHorario != ''){
+      axios.patch('/api/curso/horario', 'nombre=' + this.cursoSeleccionado.nombre + '&horario=' +  this.cursoHorario ).then(response =>{
+        console.log(response.data);
+         })
+         .catch(error => this.error = error.response.status);
+    }
+    if(this.cursoProfesor != ''){
+      axios.patch('/api/curso/profesor', 'nombre=' + this.cursoSeleccionado.nombre + '&profesorId=' +  this.cursoProfesor ).then(response =>{
+        console.log(response.data);
+         })
+         .catch(error => this.error = error.response.status);
+    }
+    Swal.fire({
+      background:'#dc1d1d',
+      position: 'top-end',
+      title: 'Curso cambiado con exito',
+      showConfirmButton: false,
+      timer: 1500
+    })
+    this.obtenerCursos(this.cursosUrl)
+
+   },
+   cambiarProfesor(){
+    console.log(this.profesorSeleccionado.id);
+    
+    if(this.profesorNombre != ''){
+      console.log("hola");
+      axios.patch('/api/profesor/nombre',  'id=' + this.profesorSeleccionado.id + '&nombre=' + this.profesorNombre).then(response =>{
+        console.log(response.data);
+         })
+         .catch(error => this.error = error.response.status);
+    }
+    
+    if(this.profesorApellido != ''){
+      axios.patch('/api/profesor/apellido', 'id=' + this.profesorSeleccionado.id + '&apellido=' + this.profesorApellido).then(response =>{
+        console.log(response.data);
+         })
+         .catch(error => this.error = error.response.status);
+    
+    }
+
+    Swal.fire({
+      background:'#dc1d1d',
+      position: 'top-end',
+      title: 'Profesor cambiado con exito',
+      showConfirmButton: false,
+      timer: 1500
+    })
+    this.obtenerProfesores(this.profesoresUrl)
+
+   },
    quitaCursoAlumno(c){
     axios.patch('/api/alumno/curso',  'email=' + this.alumnoSeleccionado.email + '&curso=' + c).then(response =>{
       Swal.fire({
@@ -188,6 +257,18 @@ createApp({
         this.obtenerAlumnos(this.alumnosUrl)
        }).catch(error => this.error = error.response.status);
     })
+   },
+   quitarCursoProfesor(){
+    Swal.fire({
+      background:'#dc1d1d',
+      position: 'top-end',
+      title: 'Funcion aun no agregada',
+      showConfirmButton: false,
+      timer: 1500
+    }).then(response => {
+      this.obtenerProfesores(this.profesoresUrl)
+     }).catch(error => this.error = error.response.status);
+  
    },
    borrarProfesor(curso){
     axios.patch('/api/curso/profesor/borrar', 'nombre=' + curso).then(response => {
@@ -202,6 +283,18 @@ createApp({
        }).catch(error => this.error = error.response.status)
     } )
 
+   },
+   eliminarAlumno(id){
+    axios.delete('/api/alumno/id')
+   },
+   crearCurso(){
+
+    axios.post('/api/curso/nuevo', 'nombre=' + this.cursoNombre + '&area=' + this.cursoArea + '&horario=' + this.cursoHorario.toUpperCase()+ '&profesorId=' + this.cursoProfesor).then(response => console.log(response.data))
+   },
+   crearProfesor(){
+    axios.post('/api/profesor/nuevo', 'nombre=' + this.profesorNombre + '&apellido=' + this.profesorApellido ).then(response => console.log(response.data))
+
+
    }
   },
   computed:{
@@ -213,7 +306,16 @@ createApp({
         console.log(this.cursoBuscado);
       this.cursoBuscado.forEach(curso => {
          primerFiltro.forEach(alumno => {
-          if(alumno.cursos.includes(curso) && !segundoFiltro.includes(alumno)){
+          let cursos = [];
+          alumno.cursos.forEach(c => {
+
+            if(!cursos.includes(c.curso)){
+              cursos.push(c.curso)
+              
+            }
+          })
+        
+          if(cursos.includes(curso) && !segundoFiltro.includes(alumno)){
 
             segundoFiltro.push(alumno)
           }

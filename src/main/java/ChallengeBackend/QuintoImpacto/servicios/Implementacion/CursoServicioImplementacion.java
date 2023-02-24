@@ -27,6 +27,11 @@ public class CursoServicioImplementacion implements CursoServicio {
     }
 
     @Override
+    public Curso getCursoById(Long id) {
+        return cursoRepositorio.findById(id).orElse(null);
+    }
+
+    @Override
     public void saveCurso(Curso curso) {
         cursoRepositorio.save(curso);
     }

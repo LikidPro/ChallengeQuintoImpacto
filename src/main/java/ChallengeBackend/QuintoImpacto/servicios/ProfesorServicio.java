@@ -12,5 +12,7 @@ public interface ProfesorServicio {
 
     public Profesor getProfesorByNombre(String nombre);
 
+    public Profesor getProfesorById(Long id);
+
     public void saveProfesor(Profesor profesor);
 }

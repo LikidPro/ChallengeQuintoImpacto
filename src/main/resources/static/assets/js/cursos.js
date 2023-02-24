@@ -7,6 +7,8 @@ createApp({
         url:"/api/cursos",
         urlAlumno:"/api/alumno/autenticado",
         alumno:"",
+        alumnoCursos:[],
+        alumnoCursosFechas:[],
 
         
     }  
@@ -29,6 +31,13 @@ createApp({
       axios.get(url)
       .then(response => {
          this.alumno = response.data
+         this.alumno.cursos.forEach(curso => {
+         this.alumnoCursosFechas.push(curso)
+         this.alumnoCursos.push(curso.curso)
+          console.log(this.alumnoCursos);
+          console.log(this.alumnoCursosFechas);
+          
+         });
          if(this.alumno ==""){
           console.log("no inicio seccion");
          }else{
@@ -53,7 +62,8 @@ createApp({
           title: response.data,
           showConfirmButton: false,
           timer: 1500
-        })}).catch(error =>{
+        })}).then( () =>  this.alumnoAutenticado(this.urlAlumno) )
+        .catch(error =>{
           Swal.fire({
             background:'#dc1d1d',
             position: 'top-end',

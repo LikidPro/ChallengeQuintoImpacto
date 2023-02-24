@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 @RestController
@@ -32,14 +33,16 @@ public class CursoAlumnoControlador {
             @RequestParam String curso,
             Authentication authentication
             ){
+        LocalDate localDate = LocalDate.now();
         Alumno alumno = alumnoServicio.getAlumnoByEmail(authentication.getName());
+        if(alumno != null){
         if (alumno.getCursos().stream().filter(cursoAlumno -> cursoAlumno.getCurso().getNombre().equals(curso)).collect(Collectors.toSet()).size()==1){
 
             return new ResponseEntity<>("Ya estas inscripto a este curso",HttpStatus.FORBIDDEN);
         }
-        if(alumno != null){
+
             Curso curso1= cursoServicio.getCursoByNombre(curso);
-        CursoAlumno cursoAlumno = new CursoAlumno(alumno,curso1);
+        CursoAlumno cursoAlumno = new CursoAlumno(alumno,curso1,localDate);
         cursoAlumnoServicio.saveCursoAlumno(cursoAlumno);
         }else {
             return new ResponseEntity<>("No esta registrado", HttpStatus.FORBIDDEN);

@@ -27,6 +27,11 @@ public class ProfesorServicioImplementacion implements ProfesorServicio {
     }
 
     @Override
+    public Profesor getProfesorById(Long id) {
+        return profesorRepositorio.findById(id).orElse(null);
+    }
+
+    @Override
     public void saveProfesor(Profesor profesor) {
         profesorRepositorio.save(profesor);
     }

@@ -60,8 +60,16 @@ public class Profesor {
     }
 
     public void addCurso(Curso curso){
-        curso.setProfesor(this);
-        cursos.add(curso);
+        if(cursos.size()==0){
+            curso.setProfesor(this);
+            cursos.add(curso);
+        }
+        cursos.forEach(curso1 -> {
+            if(!curso1.getHorario().equals(curso.getHorario())){
+                curso.setProfesor(this);
+                cursos.add(curso);
+            }
+        });
 
     }
 

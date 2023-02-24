@@ -14,6 +14,9 @@ public interface CursoServicio {
 
     public Curso getCursoByNombre(String nombre);
 
+    public Curso getCursoById(Long id);
+
+
     public void saveCurso(Curso curso);
 
     public void borrarCursoAlumno(Curso curso,CursoAlumno cursoAlumno);
